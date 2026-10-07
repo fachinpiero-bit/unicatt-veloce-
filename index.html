@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14284b">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Unicatt Veloce</title>
+<script async src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.0.3/qrcode.min.js"></script>
+<style>
+:root{--bg:#eef1f6;--card:#fff;--ink:#101a33;--mut:#5d6580;--line:#d5dbe8;--acc:#14284b;--on:#fff;--gold:#8f6a0e;--ok:#1f7a4a;--bad:#b3392b;--dh:#14284b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1222;--card:#141d34;--ink:#e8ecf6;--mut:#9aa3bb;--line:#263150;--acc:#e0b84e;--on:#0c1222;--gold:#e0b84e;--ok:#5cc08a;--bad:#ef8272;--dh:#2a3b6e}}
+:root[data-theme="dark"]{--bg:#0c1222;--card:#141d34;--ink:#e8ecf6;--mut:#9aa3bb;--line:#263150;--acc:#e0b84e;--on:#0c1222;--gold:#e0b84e;--ok:#5cc08a;--bad:#ef8272;--dh:#2a3b6e}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:24px}
+main{max-width:640px;margin:0 auto;padding:12px 16px}
+h1,h2,.tm,.day{font-family:Georgia,"Times New Roman",serif}
+h1{font-size:28px;margin:8px 0 4px;letter-spacing:-.01em}
+h2{font-size:26px;margin:32px 0 0;padding-bottom:4px;border-bottom:2px solid var(--gold);text-transform:capitalize}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 100px)}
+.mut{color:var(--mut);font-size:14px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:12px;height:52px;padding:0 12px;background:var(--bg);border-bottom:1px solid var(--line)}
+header b{font:700 20px Georgia,"Times New Roman",serif}
+.ic{background:none;border:1px solid var(--line);border-radius:6px;width:44px;height:44px;font-size:22px}
+.ch{margin-left:auto;display:flex;gap:6px}
+.dy{margin-top:16px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+.dh{position:sticky;top:calc(env(safe-area-inset-top,0px) + 52px);z-index:2;display:flex;justify-content:space-between;margin:0;padding:10px 14px;background:var(--dh);color:#fff;border-radius:7px 7px 0 0;font:700 17px Georgia,"Times New Roman",serif;text-transform:capitalize}
+.dh.td{background:var(--gold);color:var(--on)}
+.dy .lr{padding:12px 14px}
+.dy .lr:first-of-type{border-top:0}
+.dy .ne{margin:0;padding:12px 14px}
+.pb{margin:16px 0;padding:14px 16px;border:1px solid var(--line);border-left:6px solid var(--c);border-radius:6px;background:var(--card)}
+.pb b{display:block;font:700 17px Georgia,"Times New Roman",serif}
+.pb p{margin:8px 0}
+.pbE{--c:var(--gold)}.pbH{--c:var(--mut)}.pbP{--c:var(--bad)}.pbR{--c:var(--ok)}
+.pb .ex{padding:10px 0;border-top:1px solid var(--line)}
+select{font:inherit;font-size:14px;min-height:40px;max-width:150px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)}
+a.btn{display:inline-block;text-decoration:none;line-height:24px}
+.lr{display:grid;grid-template-columns:76px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+.tm{font-size:24px;line-height:1.1}
+.tm span{display:block;font:14px system-ui,sans-serif;color:var(--mut)}
+.lr.now .tm{color:var(--gold)}
+.pill{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid currentColor;margin-top:4px}
+.ok{color:var(--ok)}
+.btn{background:var(--acc);color:var(--on);border:0;border-radius:6px;padding:10px 14px;font-weight:600;min-height:44px;margin-top:8px}
+.btn.g{background:none;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+details{border-top:1px solid var(--line);padding:12px 0}
+summary{cursor:pointer;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary b{display:block;font-size:17px}
+.dt{padding-top:8px;font-size:15px}
+.dt b{display:block;margin-top:10px}
+.seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:12px 0}
+.seg button{flex:1;background:none;border:0;padding:12px}
+.seg .on{background:var(--acc);color:var(--on);font-weight:600}
+input{width:100%;padding:12px;margin:8px 0;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);font:inherit}
+.sel{border-left:3px solid var(--gold);padding:4px 0 4px 12px;margin:14px 0}
+aside{position:fixed;top:0;bottom:0;left:0;width:260px;max-width:82vw;display:flex;flex-direction:column;background:var(--card);border-right:1px solid var(--line);padding:calc(env(safe-area-inset-top,0px) + 16px) 0 calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-100%);visibility:hidden;transition:transform .2s,visibility .2s;z-index:20;overflow-y:auto}
+aside.open{transform:none;visibility:visible}
+aside .br{font:700 22px Georgia,"Times New Roman",serif;padding:0 20px 16px}
+aside button,aside a{display:block;width:100%;text-align:left;background:none;border:0;border-left:3px solid transparent;padding:11px 20px;font-size:16px;color:inherit;text-decoration:none}
+aside .on{border-left-color:var(--gold);font-weight:700;background:var(--bg)}
+aside hr{border:0;border-top:1px solid var(--line);margin:8px 20px;width:calc(100% - 40px)}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:15;display:none}
+.ov.open{display:block}
+@media(min-width:900px){aside{transform:none;visibility:visible}.ov{display:none!important}.mb{display:none}body{padding-left:260px}}
+@media(prefers-reduced-motion:reduce){aside{transition:none}}
+.toast{z-index:40;position:fixed;left:16px;right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--acc);color:var(--on);padding:12px;border-radius:6px;text-align:center;font-weight:600}
+.fl{display:grid;gap:10px;margin:12px 0}
+.fl label{display:block;font-size:14px;color:var(--mut)}
+.fl select,.fl input{display:block;width:100%;max-width:none;margin:4px 0 0}
+.seats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.seat{display:flex;flex-direction:column;align-items:center;padding:10px 0;min-height:56px;background:var(--card);border:1px solid var(--line);border-radius:6px}
+.seat b{font:700 18px Georgia,"Times New Roman",serif}
+.seat small{font-size:12px;color:var(--mut)}
+.seat:disabled{opacity:.45;cursor:not-allowed}
+.seat.on{border:2px solid var(--gold)}
+.tl{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2px;margin:8px 0}
+.tl i{font:11px system-ui,sans-serif;font-style:normal;text-align:center;padding:9px 0;border-radius:3px;background:var(--line);color:var(--mut)}
+.tl .cf{background:var(--ok);color:var(--on)}
+.tl .cm{background:var(--gold);color:var(--on)}
+.tl .co,.tl .cp{text-decoration:line-through}
+.sc{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.7)}
+.sc[hidden]{display:none}
+.sci{display:grid;gap:10px;width:100%;max-width:420px;max-height:100%;overflow:auto;padding:16px;border-radius:8px;background:var(--card)}
+.sci video{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;background:#000}
+.qrb{display:inline-block;padding:8px;border-radius:6px;background:#fff}
+.lk{display:inline-block;margin-left:6px;padding:0 2px;background:none;border:0;color:var(--gold);font-size:13px;text-decoration:underline;cursor:pointer}
+.sd{padding:12px 0;border-top:1px solid var(--line)}
+.sd .lk{margin:4px 12px 0 0;font-size:14px}
+.sd.hl{padding-left:12px;border-left:4px solid var(--gold)}
+.stt{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0 12px}
+.stt div{padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+.stt b{display:block;font:700 22px Georgia,"Times New Roman",serif}
+.stt span{font-size:12px;color:var(--mut)}
+.bar{height:8px;border-radius:4px;background:var(--line)}
+.bar i{display:block;height:100%;border-radius:4px;background:var(--ok)}
+.in a{display:block;padding:8px 0;color:var(--gold)}
+</style></head>
+<body>
+<header><button class="ic mb" aria-label="Apri il menu" onclick="mn(1)">☰</button><b id="ht">Lezioni</b><span class="ch" id="hc"></span></header>
+<main></main>
+<div class="toast" id="ts" hidden></div>
+<div class="sc" id="sc" hidden role="dialog" aria-label="Scansiona il QR del posto"><div class="sci"><b>Scansiona il QR del posto</b><video id="vd" playsinline muted></video><p class="mut" id="sm"></p><input id="mc" placeholder="Oppure scrivi il codice sotto il QR"><button class="btn" onclick="qc($('#mc').value)">Conferma codice</button><label class="btn g" style="text-align:center;font-size:16px">Scegli una foto del QR<input type="file" accept="image/*" capture="environment" hidden onchange="qf(this)"></label><button class="btn g" onclick="qx()">Chiudi</button></div></div>
+<div class="ov" id="ov" onclick="mn(0)"></div>
+<aside id="sd" aria-label="Menu"><div class="br">Unicatt Veloce</div>
+<button data-t="hom" onclick="go('hom')">Oggi</button><button data-t="cal" onclick="go('cal')">Lezioni</button><button data-t="cor" onclick="go('cor')">Corsi</button><button data-t="esa" onclick="go('esa')">Esami</button><button data-t="vot" onclick="go('vot')">Voti</button><button data-t="teo" onclick="go('teo')">Teologia</button><button data-t="onl" onclick="go('onl')">Corsi online</button><button data-t="lib" onclick="go('lib')">Libreria</button><button data-t="mpp" onclick="go('mpp')">Mappa</button><button data-t="bib" onclick="go('bib')">Biblioteca</button>
+<hr><a href="https://blackboard.unicatt.it/" target="_blank" rel="noopener" aria-label="Blackboard, si apre in una nuova scheda">Blackboard</a>
+<hr><button data-t="imp" onclick="go('imp')">Impostazioni</button><button data-t="ifo" onclick="go('ifo')">Info</button></aside>
+<script>
+const $=s=>document.querySelector(s),
+ld=(k,d)=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}},
+T0=new Date(),add=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x},
+f=(d,o)=>d.toLocaleDateString('it-IT',o),
+GG=['','Lun','Mar','Mer','Gio','Ven'];
+T0.setHours(0,0,0,0);
+// Dati di esempio: da sostituire con il piano di studi reale
+const C={mic:{n:'Microeconomia',cfu:9,s:1,p:'Prof.ssa L. Bianchi'},sta:{n:'Statistica',cfu:9,s:1,p:'Prof. G. Ferrari'},dpr:{n:'Diritto privato',cfu:9,s:1,p:'Prof. A. Moretti'},sto:{n:'Storia contemporanea',cfu:6,s:1,p:'Prof.ssa C. Villa'},mac:{n:'Macroeconomia',cfu:9,s:2,p:'Prof. R. Galli'},rag:{n:'Ragioneria generale',cfu:9,s:2,p:'Prof.ssa M. Sala'},dco:{n:'Diritto commerciale',cfu:6,s:2,p:'Prof. F. Longo'},inf:{n:'Informatica',cfu:6,s:2,p:'Prof. D. Greco'},ing:{n:'Inglese B2',cfu:6,s:2,p:'Prof.ssa S. Clark'}};
+const L=[['mic',1,'09:00','11:00','Aula G.015'],['sta',1,'14:00','16:00','Aula C.110'],['dpr',2,'09:00','11:00','Aula G.012'],['sto',2,'11:15','13:15','Aula NI.110'],['mic',3,'11:15','13:15','Aula G.015'],['sta',4,'09:00','11:00','Aula C.110'],['dpr',4,'14:00','16:00','Aula G.012'],['sto',5,'11:15','13:15','Aula NI.110'],
+['mac',1,'09:00','11:00','Aula G.015'],['dco',1,'14:00','16:00','Aula C.110'],['rag',2,'09:00','11:00','Aula G.012'],['mac',3,'11:15','13:15','Aula G.015'],['ing',3,'14:00','16:00','Sala PC N.011'],['rag',4,'11:15','13:15','Aula C.110'],['dco',4,'14:00','16:00','Aula G.012'],['inf',5,'09:00','11:00','Sala PC N.012']];
+const dt=z=>{const[a,b,c]=z.split('-');return new Date(+a,b-1,+c)},sn=m=>m<3?'invernale':m<7?'estiva':'autunnale';
+const X=[['p1','mic','2026-10-27','09:00','Aula G.015',1],['p2','sta','2026-10-29','14:00','Aula C.110',1],['e1','mic','2027-01-12','09:00','Aula G.015'],['e2','sta','2027-01-14','14:00','Aula C.110'],['e3','dpr','2027-01-19','09:00','Aula G.012'],['e4','sto','2027-01-21','10:00','Aula NI.110'],['e5','mic','2027-02-09','09:00','Aula G.015'],['e6','sta','2027-02-11','14:00','Aula C.110'],['e7','dpr','2027-02-16','09:00','Aula G.012'],['e8','sto','2027-02-18','10:00','Aula NI.110'],['p3','mac','2027-04-13','09:00','Aula G.015',1],['p4','rag','2027-04-15','09:00','Aula G.012',1],['e9','mac','2027-06-09','09:00','Aula G.015'],['e10','rag','2027-06-11','09:00','Aula G.012'],['e11','dco','2027-06-16','14:00','Aula C.110'],['e12','inf','2027-06-22','11:00','Sala PC N.012'],['e13','ing','2027-06-24','15:00','Sala PC N.011'],['e14','mac','2027-07-07','09:00','Aula G.015'],['e15','rag','2027-07-09','09:00','Aula G.012'],['e16','dco','2027-07-14','14:00','Aula C.110'],['e17','mic','2027-09-01','09:00','Aula G.015'],['e18','sta','2027-09-03','14:00','Aula C.110']].map(([id,c,z,t,r,p])=>({id,c,d:dt(z),t,r,p:!!p}));
+const ses=e=>(e.p?'Prova intermedia':'Sessione '+sn(e.d.getMonth()))+' '+e.d.getFullYear();
+// Fasi dal calendario ufficiale Facoltà di Economia, Milano 2026/27. L lezioni, P prove intermedie, R recupero, E esami, H vacanze
+const PH=[['2026-09-14','2026-12-05','L'],['2026-10-26','2026-10-31','P'],['2026-12-06','2026-12-08','H'],['2026-12-09','2026-12-12','L'],['2026-12-14','2026-12-19','R'],['2026-12-20','2027-01-06','H'],['2027-01-07','2027-02-20','E'],['2027-02-22','2027-03-24','L'],['2027-03-25','2027-03-29','H'],['2027-03-30','2027-03-31','R'],['2027-04-01','2027-04-30','L'],['2027-04-12','2027-04-17','P'],['2027-05-01','2027-05-01','H'],['2027-05-03','2027-05-29','L'],['2027-05-31','2027-06-01','E'],['2027-06-02','2027-06-06','H'],['2027-06-07','2027-07-24','E'],['2027-07-25','2027-08-22','H'],['2027-08-23','2027-09-11','E']].map(([a,b,c])=>[dt(a),dt(b),c]),
+ph=d=>{let r;for(const[a,b,c]of PH)if(d>=a&&d<=b)r=c;return r},
+MS=[];for(let d=new Date(T0.getFullYear(),T0.getMonth(),1);d<=dt('2027-09-01');d=new Date(d.getFullYear(),d.getMonth()+1,1))MS.push(['m'+d.getFullYear()+'-'+d.getMonth(),f(d,{month:'long',year:'numeric'})]);
+const TH=[['t1','Prof. M. Conti','Teologia fondamentale','Martedì 14:00–16:00','Le domande di senso e il dialogo tra fede e ragione.',8],['t2','Prof.ssa E. Marchi','Etica cristiana e società','Giovedì 09:00–11:00','Bene comune e dottrina sociale applicati alla vita professionale.',3],['t3','Prof. P. Ricci','Introduzione alla Bibbia','Mercoledì 16:00–18:00','Lettura guidata dei testi biblici nel loro contesto storico.',0]];
+const S={t:'hom',x:0,q:'',l:0,seat:null,bx:0,dk:'',a:0,n:1,bq:'',rm:null,cf:0,d:T0.getDay()==0?add(T0,1):T0.getDay()==6?add(T0,2):T0};
+
+function cal(){
+ const B=ld('b2',[]),hm=new Date().toTimeString().slice(0,5),END=dt('2027-09-11'),D={day:'numeric',month:'long'};
+ let h='',mo=-1;
+ for(let d=new Date(T0);d<=END;d=add(d,1)){
+  const c=ph(d),w=d.getDay(),isT=+d==+T0;
+  if(!c||(c=='L'&&(w==0||w==6)))continue;
+  const k=d.getFullYear()*12+d.getMonth();
+  if(k!=mo){mo=k;h+=`<h2 id="m${d.getFullYear()}-${d.getMonth()}">${f(d,{month:'long',year:'numeric'})}</h2>`}
+  if(c=='L'){
+   const ls=L.filter(l=>l[1]==w&&C[l[0]].s==(d.getFullYear()<2027?1:2)&&fw(l[0])).sort((a,b)=>a[2]<b[2]?-1:1);
+   h+=`<section class="dy" id="d${+d}"><h3 class="dh${isT?' td':''}"><span>${isT?'Oggi, ':''}${f(d,{weekday:'long'})}</span><span>${f(d,D)}</span></h3>`+
+    (ls.length?ls.map(l=>{const n=isT&&hm>=l[2]&&hm<l[3];return `<div class="lr${n?' now':''}"><div class="tm">${l[2]}<span>${l[3]}</span></div><div><b>${C[l[0]].n}</b><div class="mut">${rl(l[4])}</div><div class="mut">${C[l[0]].p}</div>${n?'<span class="pill ok">In corso</span>':''}</div></div>`}).join(''):'<p class="mut ne">Nessuna lezione.</p>')+'</section>';
+   continue}
+  let e=d;while(+e<+END&&ph(add(e,1))==c)e=add(e,1);
+  const inr=X.filter(q=>fw(q.c)&&q.d>=d&&q.d<=e),mine=inr.filter(q=>B.includes(q.id)),
+   nm={E:"Sessione d'esami "+sn(d.getMonth()),P:'Prove intermedie',R:'Recupero lezioni',H:'Vacanze'}[c];
+  h+=`<section class="pb pb${c}" id="d${+d}"><b>${nm}</b><div class="mut">${+d==+e?f(d,D):f(d,D)+' – '+f(e,D)}</div>`;
+  if(c=='R')h+='<p class="mut">Le lezioni saltate si recuperano in questi giorni.</p>';
+  if(c=='E'||c=='P')h+=`<p class="mut">Nessuna lezione. ${inr.length?inr.length+(inr.length==1?' appello in programma.':' appelli in programma.'):'Nessun appello in questi giorni.'}</p>`+mine.map(q=>`<div class="ex"><strong>${f(q.d,{weekday:'long',day:'numeric',month:'long'})}, ${q.t}</strong><div>${C[q.c].n}</div><div class="mut">${rl(q.r)}</div><span class="pill ok">Prenotato</span></div>`).join('')+(inr.length?`<button class="btn g" onclick="go('esa')">Vedi gli appelli</button>`:'');
+  h+='</section>';d=e}
+ return h+'<p class="mut" style="margin-top:20px">Fine calendario: 11 settembre 2027. <a href="https://studenticattolica.unicatt.it/calendario%2026-27%20Economia.pdf" target="_blank" rel="noopener">Calendario ufficiale (PDF)</a></p>'+(DL?'<button class="btn g" onclick="ex()">Esporta in Google Calendar (CSV)</button>':'')}
+
+function cor(){return `<input id="q" type="search" placeholder="Cerca corso o docente" value="${S.q}" oninput="S.q=this.value;cl()"><div id="cl"></div>`}
+function cl(){const q=S.q.toLowerCase();$('#cl').innerHTML=Object.entries(C).filter(([k,c])=>(c.n+' '+c.p).toLowerCase().includes(q)).map(([k,c])=>{
+ const ls=L.filter(l=>l[0]==k).map(l=>`<div>${GG[l[1]]} ${l[2]}–${l[3]}, ${rl(l[4])}</div>`).join(''),nx=X.filter(e=>e.c==k&&e.d>=T0).sort((a,b)=>a.d-b.d)[0];
+ return `<details><summary><b>${c.n}</b><span class="mut">${c.p}, ${c.cfu} CFU, ${c.s}° semestre${fw(k)?'':', non seguito'}</span></summary><div class="dt"><b>Orario settimanale</b>${ls}<b>Prossimo appello</b><div>${nx?f(nx.d,{weekday:'long',day:'numeric',month:'long'})+' alle '+nx.t:'Nessun appello in programma'}</div><button class="btn g" onclick="tf('${k}')">${fw(k)?'Non seguire più':'Segui questo corso'}</button> <a class="btn" href="https://blackboard.unicatt.it/" target="_blank" rel="noopener">Apri Blackboard</a></div></details>`}).join('')||'<p class="mut">Nessun corso trovato. Prova con un altro nome.</p>'}
+
+function esa(){const B=ld('b2',[]),R=(S.x?X.filter(e=>B.includes(e.id)):X.filter(e=>fw(e.c))).slice().sort((a,b)=>a.d-b.d);
+ return `<div class="seg"><button class="${S.x?'':'on'}" onclick="sx(0)">Appelli</button><button class="${S.x?'on':''}" onclick="sx(1)">Prenotati (${B.length})</button></div>`+(R.map(e=>{const k=B.includes(e.id),dl=add(e.d,-3),cs=dl<T0;
+  return `<div class="lr"><div class="tm">${e.d.getDate()}<span>${f(e.d,{month:'short'})}</span></div><div><b>${C[e.c].n}</b><div class="mut">${f(e.d,{weekday:'long'})} alle ${e.t}</div><div class="mut">${rl(e.r)}</div><div class="mut">${ses(e)}</div><div class="mut">${cs?'Iscrizioni chiuse':'Iscrizione entro il '+f(dl,{day:'numeric',month:'long'})}</div><button class="btn${k?' g':''}" ${cs&&!k?'disabled':''} onclick="bk('${e.id}')">${k?'Annulla prenotazione':'Prenota esame'}</button></div></div>`}).join('')||'<p class="mut">Non hai prenotazioni. Apri Appelli e scegli una data.</p>')}
+const sx=n=>{S.x=n;render()};
+function bk(id){let B=ld('b2',[]);const e=X.find(x=>x.id==id);
+ if(B.includes(id)){B=B.filter(x=>x!=id);tost('Prenotazione annullata')}
+ else{const c=B.some(i=>+X.find(x=>x.id==i).d==+e.d);B.push(id);tost(c?'Esame prenotato. Hai un altro esame lo stesso giorno.':'Esame prenotato')}
+ sv('b2',B);render()}
+
+function teo(){const p=ld('t',null),c=TH.find(x=>x[0]==p);
+ return `<p class="mut">Scegli il docente del tuo corso di teologia. Puoi cambiare scelta finché ci sono posti.</p>`+(c?`<div class="sel"><b>La tua scelta</b><div>${c[1]}, ${c[2]}</div><div class="mut">${c[3]}</div></div>`:'')+TH.map(t=>{const on=t[0]==p,full=!t[5]&&!on;
+  return `<div class="lr"><div class="tm">${t[5]}<span>posti</span></div><div><b>${t[1]}</b><div>${t[2]}</div><div class="mut">${t[3]}</div><div class="mut">${t[4]}</div><button class="btn${on?' g':''}" ${full||on?'disabled':''} onclick="pk('${t[0]}')">${on?'Docente scelto':full?'Corso al completo':'Scegli questo docente'}</button></div></div>`}).join('')}
+function pk(id){sv('t',id);tost('Docente salvato');render()}
+
+// ---- Biblioteca (dati di esempio). Email e verifica sono simulate: servirebbe il server dell'università
+const LB=[['c','Biblioteca Centrale',8,20,16],['e','Biblioteca di Economia',9,19,12],['p','Sala studio Pio XI',8,22,10]],
+kd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),
+hs=z=>{let h=7;for(const c of z)h=(h*31+c.charCodeAt(0))>>>0;return h},
+cd=b=>b.l.toUpperCase()+'-'+String(b.s).padStart(2,'0'),
+qi=t=>{try{const q=qrcode(0,'M');q.addData('UNICATT-BIB|'+t);q.make();return q.createImgTag(5,4)}catch(e){return ''}};
+S.dk=kd(T0);
+function occ(id,seat,dk,o,c){const r=hs(id+seat+dk),a=new Set(),s1=o+r%(c-o-1),n1=2+(r>>3)%3,s2=o+(r>>6)%(c-o-1),n2=1+(r>>9)%3;
+ for(let i=0;i<n1;i++)a.add(s1+i);if((r>>12)%3)for(let i=0;i<n2;i++)a.add(s2+i);return a}
+function sl(l,seat,bk){const[id,,o,c]=l,oc=occ(id,seat,S.dk,o,c),me=new Set(),nh=new Date().getHours(),td=S.dk==kd(T0);
+ bk.filter(b=>!xp(b)&&b.l==id&&b.s==seat&&b.d==S.dk).forEach(b=>{for(let i=0;i<b.n;i++)me.add(b.a+i)});
+ return Array.from({length:c-o},(_,i)=>{const hr=o+i;return me.has(hr)?'m':td&&hr<=nh?'p':oc.has(hr)?'o':'f'})}
+function bib(){const bk=ld('lb',[]);
+ return `<div class="seg"><button class="${S.bx?'':'on'}" onclick="S.bx=0;render()">Prenota</button><button class="${S.bx?'on':''}" onclick="S.bx=1;render()">Le mie prenotazioni (${bk.length})</button></div>`+(S.bx?mie(bk):pre(bk))}
+function pre(bk){const l=LB[S.l],[id,nm,o,c,ns]=l,tl=Array.from({length:7},(_,i)=>add(T0,i));
+ let h=`<div class="fl"><label>Biblioteca<select onchange="S.l=+this.value;S.seat=null;render()">${LB.map((x,i)=>`<option value="${i}"${i==S.l?' selected':''}>${x[1]}</option>`).join('')}</select></label><label>Giorno<select onchange="S.dk=this.value;S.seat=null;render()">${tl.map(d=>`<option value="${kd(d)}"${kd(d)==S.dk?' selected':''}>${f(d,{weekday:'long',day:'numeric',month:'long'})}</option>`).join('')}</select></label></div><p class="mut">Aperta dalle ${o}:00 alle ${c}:00. Scegli un posto: il numero sotto indica le ore ancora libere.</p><div class="seats">`;
+ for(let i=1;i<=ns;i++){const n=sl(l,i,bk).filter(v=>v=='f').length;h+=`<button class="seat${i==S.seat?' on':''}" ${n?'':'disabled'} onclick="S.seat=${i};render()"><b>${i}</b><small>${n} h</small></button>`}
+ h+='</div>';
+ if(S.seat){const v=sl(l,S.seat,bk),fs=[];v.forEach((x,i)=>x=='f'&&fs.push(o+i));
+  h+=`<p><b>Posto ${S.seat}</b></p><div class="tl">${v.map((x,i)=>`<i class="c${x}">${o+i}</i>`).join('')}</div><p class="mut">Verde libero, grigio occupato, oro già tuo.</p>`;
+  if(fs.length){if(!fs.includes(S.a))S.a=fs[0];let mx=0;while(mx<4&&v[S.a-o+mx]=='f')mx++;S.n=Math.max(1,Math.min(S.n||1,mx));
+   h+=`<div class="fl"><label>Inizio<select onchange="S.a=+this.value;render()">${fs.map(x=>`<option value="${x}"${x==S.a?' selected':''}>${x}:00</option>`).join('')}</select></label><label>Durata (massimo 4 ore)<select onchange="S.n=+this.value;render()">${[1,2,3,4].slice(0,mx).map(n=>`<option value="${n}"${n==S.n?' selected':''}>${n} ${n>1?'ore':'ora'}</option>`).join('')}</select></label><label>Email dell'università<input id="em" type="email" autocomplete="email" placeholder="La tua email" value="${ld('em','')}" oninput="sv('em',this.value)"></label></div><button class="btn" onclick="pb()">Prenota dalle ${S.a}:00 alle ${S.a+S.n}:00</button><p class="mut">Riceverai un'email con un codice di verifica. Conferma il posto scansionando il QR sul tavolo entro 15 minuti dall'inizio: dopo, il posto torna libero.</p>`}
+  else h+='<p class="mut">Nessun orario libero per questo posto.</p>'}
+ return h}
+function pb(){const em=$('#em').value.trim(),bk=ld('lb',[]);
+ if(!S.seat||!S.a)return;
+ if(!/^\S+@\S+\.\S+$/.test(em))return tost("Inserisci un'email valida");
+ if(bk.some(b=>!xp(b)&&b.d==S.dk&&S.a<b.a+b.n&&b.a<S.a+S.n))return tost("Hai già una prenotazione in quell'orario");
+ bk.push({id:'b'+Date.now(),l:LB[S.l][0],s:S.seat,d:S.dk,a:S.a,n:S.n,st:'mail',code:String(100000+Math.floor(Math.random()*900000)),em});
+ sv('lb',bk);sv('em',em);S.seat=null;S.bx=1;tost('Prenotazione creata. Verifica la tua email.');render()}
+function mie(bk){if(!bk.length)return '<p class="mut">Nessuna prenotazione. Apri Prenota e scegli un posto.</p>';
+ return bk.slice().sort((a,b)=>a.d<b.d?-1:a.d>b.d?1:a.a-b.a).map(b=>{const L0=LB.find(x=>x[0]==b.l),ok=b.st=='ok',xx=xp(b);
+  let x=`<section class="pb ${xx?'pbH':ok?'pbR':'pbE'}"><b>${L0[1]}, posto ${b.s}</b><div class="mut">${f(dt(b.d),{weekday:'long',day:'numeric',month:'long'})}, ${b.a}:00–${b.a+b.n}:00 (${b.n} ${b.n>1?'ore':'ora'})</div><span class="pill${ok?' ok':''}">${xx?'Scaduta, posto rilasciato':{mail:'Da verificare via email',qr:'Da confermare con il QR',ok:'Confermata'}[b.st]}</span>`;
+  if(!xx&&b.st=='mail')x+=`<p class="mut">Abbiamo mandato un codice a ${b.em}. Inseriscilo e poi conferma il posto con il QR entro le ${ddl(b)}.</p><input id="vc${b.id}" inputmode="numeric" maxlength="6" placeholder="Codice a 6 cifre"><button class="btn" onclick="vf('${b.id}')">Verifica email</button><details><summary class="mut">Email simulata (solo prova)</summary><p>Il tuo codice di verifica: <strong>${b.code}</strong></p></details>`;
+  if(!xx&&b.st=='qr')x+=`<p class="mut">All'arrivo scansiona il QR sul tavolo entro le ${ddl(b)}, altrimenti il posto torna libero.</p><button class="btn" onclick="qo('${b.id}')">Scansiona QR</button><details><summary class="mut">QR del posto (solo prova)</summary><div class="qrb">${qi(cd(b))}</div><p class="mut">Codice: ${cd(b)}</p></details>`;
+  return x+`<button class="btn g" style="margin-left:8px" onclick="cn('${b.id}')">${xx?'Rimuovi':'Annulla'}</button></section>`}).join('')}
+function vf(id){const A=ld('lb',[]),b=A.find(x=>x.id==id);if(xp(b)){tost('Prenotazione scaduta');render();return}if($('#vc'+id).value.trim()!=b.code)return tost('Codice non corretto');b.st='qr';sv('lb',A);tost('Email verificata. Ora scansiona il QR.');render()}
+function cn(id){sv('lb',ld('lb',[]).filter(b=>b.id!=id));tost('Prenotazione annullata');render()}
+// Scansione QR: fotocamera con jsQR, oppure foto, oppure codice scritto a mano
+let ms=null,rq=0,lq='';
+async function qo(id){S.q=id;lq='';$('#sc').hidden=false;$('#mc').value='';$('#sm').textContent='Avvio della fotocamera';
+ try{ms=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});const v=$('#vd');v.srcObject=ms;await v.play();$('#sm').textContent='Inquadra il QR sul tavolo.';qt()}
+ catch(e){ms=null;$('#sm').textContent='Fotocamera non disponibile qui. Scegli una foto o scrivi il codice.'}}
+function qt(){const v=$('#vd');if(!ms)return;
+ if(v.readyState>=2&&window.jsQR){const w=Math.min(v.videoWidth,640),h=Math.round(w*v.videoHeight/v.videoWidth),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.drawImage(v,0,0,w,h);const i=x.getImageData(0,0,w,h),r=jsQR(i.data,w,h);if(r&&r.data&&r.data!=lq){lq=r.data;if(qc(r.data))return}}
+ rq=setTimeout(qt,200)}
+function qf(i){const fl=i.files[0];if(!fl)return;const im=new Image();im.onload=()=>{const k=Math.min(1,1200/Math.max(im.width,im.height)),w=Math.round(im.width*k),h=Math.round(im.height*k),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');x.drawImage(im,0,0,w,h);const d=x.getImageData(0,0,w,h),r=window.jsQR&&jsQR(d.data,w,h);r?qc(r.data):$('#sm').textContent='Nessun QR trovato nella foto. Riprova.'};im.src=URL.createObjectURL(fl);i.value=''}
+function qc(t){const A=ld('lb',[]),b=A.find(x=>x.id==S.q);if(!b)return;
+ if(xp(b)){$('#sm').textContent='La prenotazione è scaduta e il posto è stato rilasciato.';return}
+ if(t.trim().toUpperCase().replace('UNICATT-BIB|','')==cd(b)){b.st='ok';sv('lb',A);qx();tost('Posto confermato. Buono studio!');render();return true}
+ $('#sm').textContent='Questo codice non corrisponde al posto prenotato ('+cd(b)+').'}
+function qx(){clearTimeout(rq);if(ms)ms.getTracks().forEach(t=>t.stop());ms=null;$('#sc').hidden=true}
+// ---- Nuove sezioni: voti, corsi online, libreria, mappa, impostazioni, info
+const rl=r=>`${r} <button class="lk" onclick="gm('${r}')">Mappa</button>`,
+nf=(x,d)=>x.toFixed(d).replace('.',','),gl=v=>v>30?'30L':v,
+av=a=>{const c=a.reduce((s,x)=>s+x.c,0);return c?a.reduce((s,x)=>s+Math.min(x.v,30)*x.c,0)/c:0};
+const REG=[['Matematica generale',9,27,'2026-02-10'],['Economia aziendale',9,29,'2026-02-17'],['Inglese B1',6,30,'2026-06-24'],['Informatica di base',6,26,'2026-07-08'],['Diritto pubblico',9,25,'2026-09-02'],['Storia economica',6,31,'2026-09-09']];
+function vot(){const sm=ld('vt',[]),R=REG.map(([n,c,v,d])=>({n,c,v,d:dt(d)})),all=R.concat(sm),cr=a=>a.reduce((s,x)=>s+x.c,0),
+ stt=(a,t)=>`<p><b>${t}</b></p><div class="stt"><div><b>${nf(av(a),2)}</b><span>Media ponderata</span></div><div><b>${cr(a)}/180</b><span>CFU</span></div><div><b>${nf(av(a)*110/30,1)}</b><span>Base di laurea (stima)</span></div></div>`;
+ return `<p class="mut">Voti di esempio. Con i voti simulati vedi come cambia la media prima di sostenere l'esame.</p>`+stt(R,'Registro')+(sm.length?stt(all,'Con le simulazioni'):'')+`<p class="mut">La lode vale 30 nella media. La base di laurea è la media portata a 110, senza bonus: il calcolo ufficiale può differire.</p>`
+ +R.map(x=>`<div class="lr"><div class="tm">${gl(x.v)}<span>${x.c} CFU</span></div><div><b>${x.n}</b><div class="mut">${f(x.d,{day:'numeric',month:'long',year:'numeric'})}</div></div></div>`).join('')
+ +sm.map(x=>`<div class="lr"><div class="tm">${gl(x.v)}<span>${x.c} CFU</span></div><div><b>${x.n}</b><div><span class="pill">Simulato</span></div><button class="btn g" onclick="sr('${x.id}')">Rimuovi</button></div></div>`).join('')
+ +`<p><b>Simula un voto</b></p><div class="fl"><label>Esame<select id="fx">${Object.entries(C).map(([k,c])=>`<option value="${k}">${c.n}</option>`).join('')}</select></label><label>Voto<select id="fv">${Array.from({length:14},(_,i)=>18+i).map(v=>`<option value="${v}"${v==28?' selected':''}>${gl(v)}</option>`).join('')}</select></label></div><button class="btn" onclick="sa()">Aggiungi alla simulazione</button>`}
+function sa(){const k=$('#fx').value,A=ld('vt',[]).filter(x=>x.n!=C[k].n);A.push({id:'v'+Date.now(),n:C[k].n,c:C[k].cfu,v:+$('#fv').value});sv('vt',A);render()}
+function sr(id){sv('vt',ld('vt',[]).filter(x=>x.id!=id));render()}
+
+const OL=[['en','Inglese generale','A2 – C1','Grammatica, ascolto e conversazione.'],['ea','Academic English','B2 – C1','Scrivere relazioni, tesi e presentazioni.'],['es','Spagnolo','A1 – B1','Da zero fino all\'autonomia.'],['fr','Francese','A1 – B1','Comprensione, scrittura e conversazione.'],['de','Tedesco','A1 – A2','Le basi per studiare o lavorare in area tedesca.']];
+function onl(){const co=ld('co',{});return `<p class="mut">Catalogo di esempio. Iscriviti e segna le lezioni completate per seguire i progressi.</p>`+OL.map(([k,n,lv,ds])=>{const d=co[k],en=d!==undefined;
+ return `<section class="pb ${en?'pbR':'pbH'}"><b>${n}</b><div class="mut">Livello ${lv}, 10 lezioni</div><p class="mut">${ds}</p>`+(en?`<div class="bar" role="progressbar" aria-valuenow="${d*10}" aria-valuemin="0" aria-valuemax="100"><i style="width:${d*10}%"></i></div><p class="mut">${d} lezioni su 10${d==10?', corso completato':''}</p>${d<10?`<button class="btn" onclick="ol('${k}',1)">Segna lezione completata</button>`:''}<button class="btn g" style="margin-left:8px" onclick="ol('${k}',-1)">Annulla iscrizione</button>`:`<button class="btn" onclick="ol('${k}',0)">Iscriviti</button>`)+'</section>'}).join('')}
+function ol(k,a){const co=ld('co',{});if(a==-1)delete co[k];else co[k]=a?co[k]+1:0;sv('co',co);render()}
+
+const LI=[['mic','Manuale di Microeconomia',42],['mic','Eserciziario di Microeconomia',24],['sta','Manuale di Statistica',39],['sta','Eserciziario di Statistica',22],['dpr','Istituzioni di diritto privato',46],['sto','Storia contemporanea',34],['mac','Manuale di Macroeconomia',44],['rag','Ragioneria generale',48],['dco','Diritto commerciale',41],['inf',"Informatica per l'economia",29],['ing','English for Business, B2',31]];
+function lib(){return `<p class="mut">Titoli e prezzi di esempio. Ordina online e ritira in libreria.</p><input id="bq" type="search" placeholder="Cerca per titolo o corso" value="${S.bq}" oninput="S.bq=this.value;bl()"><div id="bs"></div><div id="bl"></div>`}
+function bl(){const ct=ld('ct',[]),q=S.bq.toLowerCase(),tot=ct.reduce((s,i)=>s+LI[i][2],0);
+ $('#bs').innerHTML=`<div class="pb pbE"><b>Carrello: ${ct.length} ${ct.length==1?'libro':'libri'}</b><div class="mut">Totale € ${nf(tot,2)}</div>${ct.length?'<button class="btn" onclick="bo()">Ordina e ritira in libreria</button>':''}</div>`;
+ $('#bl').innerHTML=LI.map((b,i)=>[b,i]).filter(([b])=>(b[1]+' '+C[b[0]].n).toLowerCase().includes(q)).map(([b,i])=>{const on=ct.includes(i);
+  return `<div class="lr"><div class="tm">€${b[2]}<span>${i%3==2?'su ordinazione':'disponibile'}</span></div><div><b>${b[1]}</b><div class="mut">${C[b[0]].n}, ${C[b[0]].s}° semestre</div><button class="btn${on?' g':''}" onclick="bt(${i})">${on?'Rimuovi dal carrello':'Aggiungi al carrello'}</button></div></div>`}).join('')||'<p class="mut">Nessun libro trovato.</p>'}
+function bt(i){const A=ld('ct',[]);sv('ct',A.includes(i)?A.filter(x=>x!=i):A.concat(i));bl()}
+function bo(){sv('ct',[]);tost('Ordine registrato (prova)');bl()}
+
+const SD=[['g','Largo Gemelli 1','Sede centrale, accanto alla basilica di Sant\'Ambrogio. Aule con codice G. Tram 16 e 19, fermata Corso Magenta/Via Nirone.'],['n','Via Necchi 5/7/9/11','Aule con codice N.'],['c','Via Carducci 28/30','Aule con codice C.'],['ni','Via Nirone 15','Aule con codice NI.'],['o','Via Olona 2',''],['l','Via Lanzone 29','Edificio collegato alla sede di Largo Gemelli.'],['b','Via Buonarroti 30',''],['m','Via Morozzo della Rocca 2/a',''],['p','Via Pagliano 10 (Pime)',''],['v','Via San Vittore 18',''],['a',"Via Sant'Agnese 2",''],['s','Via Santa Valeria 3',''],['z','Viale Suzzani 279 (Fenaroli)',''],['u','Viale Murillo 17','']],
+RP={G:'g',N:'n',C:'c',NI:'ni'},gq=n=>encodeURIComponent(n.split('/')[0].replace(/\s*\(.*$/,'')+', Milano'),
+U1=n=>'https://www.google.com/maps/search/?api=1&query='+gq(n),U2=n=>'https://www.google.com/maps/dir/?api=1&destination='+gq(n);
+function gm(r){S.rm=r;S.t='mpp';mn(0);render();scrollTo(0,0)}
+function mpp(){const m=S.rm&&S.rm.match(/\b([A-Z]+)\.(\d)/),k=m&&RP[m[1]],sd=SD.find(x=>x[0]==k);let h='';
+ if(S.rm)h+=`<section class="pb pbE"><b>${S.rm}</b>`+(sd?`<p>Sede di ${sd[1]}, ${['piano terra o rialzato','1° piano','2° piano','3° piano'][m[2]]||'piano da verificare'}.</p><p class="mut">Il piano è ricavato dal codice dell'aula.</p><a class="btn" href="${U1(sd[1])}" target="_blank" rel="noopener">Apri la mappa</a><a class="btn g" style="margin-left:8px" href="${U2(sd[1])}" target="_blank" rel="noopener">Indicazioni</a>`:`<p class="mut">Non riconosco questo codice aula. Scegli la sede dall'elenco.</p>`)+'</section>';
+ return h+`<p class="mut">Sedi dell'università a Milano. La mappa si apre in una nuova scheda.</p>`+SD.map(x=>`<div class="sd${x[0]==k?' hl':''}"><b>${x[1]}</b>${x[2]?`<div class="mut">${x[2]}</div>`:''}<a class="lk" href="${U1(x[1])}" target="_blank" rel="noopener">Apri la mappa</a><a class="lk" href="${U2(x[1])}" target="_blank" rel="noopener">Indicazioni</a></div>`).join('')}
+
+function ap(){const t=ld('th','auto'),r=document.documentElement;t=='auto'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',t)}
+function ta(k){sv('th',k);ap();render()}
+function imp(){const th=ld('th','auto');
+ return `<p><b>Aspetto</b></p><div class="seg">${[['auto','Automatico'],['light','Chiaro'],['dark','Scuro']].map(([k,n])=>`<button class="${th==k?'on':''}" onclick="ta('${k}')">${n}</button>`).join('')}</div><div class="fl"><label>Email dell'università (usata per le prenotazioni)<input type="email" value="${ld('em','')}" oninput="sv('em',this.value)"></label></div><p><b>Calendario</b></p><p class="mut">Facoltà di Economia, Milano, anno 2026/27. Per altre facoltà serve il loro calendario ufficiale. Nella scheda Corsi scegli quali corsi segui: calendario, esami e promemoria mostrano solo quelli.</p>${DL?'<button class="btn g" onclick="ex()">Esporta in Google Calendar (CSV)</button>':'<p class="mut">Esportazione non disponibile in questa vista.</p>'}<p><b>Promemoria</b></p>${typeof Notification=='undefined'?'<p class="mut">Le notifiche non sono disponibili in questo browser. I promemoria restano nella schermata Oggi.</p>':`<p class="mut">Avvisi del browser 15 minuti prima di una lezione o della scadenza del QR. Funzionano solo con l'app aperta.</p><button class="btn${ld('nt',0)?' g':''}" onclick="nz()">${ld('nt',0)?'Disattiva le notifiche':'Attiva le notifiche'}</button>`}<p><b>Dati salvati</b></p><p class="mut">Prenotazioni, voti simulati, carrello e preferenze restano solo su questo dispositivo.</p><button class="btn g" onclick="wp()">${S.cf?'Tocca ancora per cancellare tutto':'Cancella i dati salvati'}</button>`}
+function wp(){if(!S.cf){S.cf=1;render();return}['b2','t','lb','em','vt','co','ct','th','mc','nt'].forEach(k=>{try{localStorage.removeItem(k)}catch(e){}});S.cf=0;S.seat=null;ap();tost('Dati cancellati');render()}
+function ifo(){return `<p><b>Unicatt Veloce</b></p><p class="mut">Versione 0.7, prototipo. Progetto indipendente: non è un'app ufficiale dell'Università Cattolica.</p><p><b>Cosa è reale</b></p><p class="mut">Le date di lezioni, esami, vacanze e recuperi vengono dal calendario della Facoltà di Economia (Milano) 2026/27. Sedi di Milano e codici delle aule (G, N, C, NI) vengono da elenchi pubblicati dall'università e potrebbero non essere aggiornati.</p><p><b>Cosa è un esempio</b></p><p class="mut">Orari, aule, docenti, appelli, voti, corsi online, libri e biblioteche sono dati inventati per mostrare come funziona l'app. Email di verifica e ordini sono simulati.</p><p><b>Sulla schermata Home</b></p><p class="mut">Safari: tocca Condividi, poi Aggiungi a Home. Chrome: apri il menu e scegli Aggiungi a schermata Home. Questa versione richiede la rete.</p><p><b>Link ufficiali</b></p><div class="in"><a href="https://studenticattolica.unicatt.it/" target="_blank" rel="noopener">Polo studenti</a><a href="https://icatt.unicatt.it/" target="_blank" rel="noopener">iCatt</a><a href="https://blackboard.unicatt.it/" target="_blank" rel="noopener">Blackboard</a><a href="https://studenticattolica.unicatt.it/durante-gli-studi-calendari-accademici" target="_blank" rel="noopener">Calendari accademici</a></div>`}
+// ---- Oggi, promemoria, corsi seguiti, scadenza dei posti, export
+const fw=k=>{const m=ld('mc',null);return !m||m.includes(k)},
+dyL=d=>{const w=d.getDay();return ph(d)=='L'&&w>0&&w<6?L.filter(l=>l[1]==w&&C[l[0]].s==(d.getFullYear()<2027?1:2)&&fw(l[0])).sort((a,b)=>a[2]<b[2]?-1:1):[]},
+bst=b=>{const d=dt(b.d);d.setHours(b.a);return +d},xp=b=>b.st!='ok'&&Date.now()>bst(b)+9e5,ddl=b=>new Date(bst(b)+9e5).toTimeString().slice(0,5),
+dm=(a,b)=>{const[x,y]=a.split(':'),[p,q]=b.split(':');return(+x*60+ +y)-(+p*60+ +q)};
+function tf(k){let m=ld('mc',null)||Object.keys(C);m=m.includes(k)?m.filter(x=>x!=k):m.concat(k);sv('mc',m);cl()}
+function hom(){const hm=new Date().toTimeString().slice(0,5),B=ld('b2',[]),Q=ld('lb',[]),c=ph(T0),ls=dyL(T0),rm=[],D1={weekday:'long',day:'numeric',month:'long'};
+ let nx=null;for(let d=new Date(T0),i=0;i<21&&!nx;d=add(d,1),i++){const a=dyL(d).filter(l=>+d>+T0||l[3]>hm);if(a.length)nx={d:new Date(d),l:a[0]}}
+ B.forEach(id=>{const e=X.find(x=>x.id==id);if(e&&e.d>=T0&&e.d<=add(T0,14))rm.push([+e.d,'Esame di '+C[e.c].n,f(e.d,D1)+' alle '+e.t,'esa'])});
+ X.forEach(e=>{if(fw(e.c)&&!B.includes(e.id)){const dl=add(e.d,-3);if(dl>=T0&&dl<=add(T0,3))rm.push([+dl,'Iscrizione a '+C[e.c].n+' in scadenza','Entro '+f(dl,D1),'esa'])}});
+ Q.forEach(b=>{if(xp(b))return;const d=dt(b.d);if(d>=T0&&d<=add(T0,7))rm.push([bst(b),({mail:"Verifica l'email per ",qr:'Scansiona il QR per ',ok:'Posto confermato: '})[b.st]+LB.find(x=>x[0]==b.l)[1]+', posto '+b.s,f(d,D1)+', '+b.a+':00'+(b.st=='ok'?'':', entro le '+ddl(b)),'bib'])});
+ rm.sort((a,b)=>a[0]-b[0]);
+ let h=`<h2 style="margin-top:8px">${f(T0,D1)}</h2><p class="mut">${{L:'Giorno di lezione',E:"Sessione d'esami",P:'Prove intermedie',R:'Recupero lezioni',H:'Vacanze'}[c]||'Nessuna attività in calendario'}</p>`;
+ if(nx){const od=+nx.d==+T0,cur=od&&nx.l[2]<=hm,m=od&&!cur?dm(nx.l[2],hm):0;
+  h+=`<section class="pb pbE"><b>Prossima lezione</b><div><strong>${C[nx.l[0]].n}</strong></div><div class="mut">${od?'Oggi':f(nx.d,D1)}, ${nx.l[2]}–${nx.l[3]}</div><div class="mut">${rl(nx.l[4])}</div>${cur?'<span class="pill ok">In corso</span>':od?`<span class="pill">tra ${m<60?m+' min':Math.floor(m/60)+' h '+m%60+' min'}</span>`:''}</section>`}
+ else h+='<p class="mut">Nessuna lezione nelle prossime tre settimane.</p>';
+ if(ls.length)h+=`<div class="dy"><h3 class="dh td"><span>Oggi</span><span>${ls.length} ${ls.length>1?'lezioni':'lezione'}</span></h3>${ls.map(l=>{const n=hm>=l[2]&&hm<l[3];return `<div class="lr${n?' now':''}"${hm>=l[3]?' style="opacity:.55"':''}><div class="tm">${l[2]}<span>${l[3]}</span></div><div><b>${C[l[0]].n}</b><div class="mut">${rl(l[4])}</div>${n?'<span class="pill ok">In corso</span>':''}</div></div>`}).join('')}</div>`;
+ h+='<p style="margin-top:20px"><b>Promemoria</b></p>'+(rm.length?rm.slice(0,6).map(([,t,u,g])=>`<div class="sd"><b>${t}</b><div class="mut">${u}</div><button class="lk" onclick="${g=='bib'?'S.bx=1;':''}go('${g}')">Apri</button></div>`).join(''):'<p class="mut">Nessun promemoria.</p>');
+ return h}
+const NT=new Set();
+function ck(){if(!ld('nt',0)||typeof Notification=='undefined'||Notification.permission!='granted')return;
+ const hm=new Date().toTimeString().slice(0,5);
+ dyL(T0).forEach(l=>{const m=dm(l[2],hm),k='l'+l[0]+l[2];if(m>0&&m<=15&&!NT.has(k)){NT.add(k);try{new Notification('Lezione tra '+m+' minuti',{body:C[l[0]].n+', '+l[4]})}catch(e){}}});
+ ld('lb',[]).forEach(b=>{const m=bst(b)+9e5-Date.now(),k='q'+b.id;if(b.st!='ok'&&m>0&&m<=9e5&&!NT.has(k)){NT.add(k);try{new Notification('Conferma il posto in biblioteca',{body:'Hai '+Math.ceil(m/6e4)+' minuti per scansionare il QR.'})}catch(e){}}})}
+setInterval(ck,60000);
+function nz(){if(ld('nt',0)){sv('nt',0);render();return}Notification.requestPermission().then(p=>{sv('nt',p=='granted'?1:0);tost(p=='granted'?'Notifiche attivate':'Permesso negato');render()}).catch(()=>tost('Notifiche non disponibili'))}
+let DL=null;
+try{window.claude&&claude.use&&claude.use('downloads').then(d=>{DL=d;if(S.t=='imp'||S.t=='cal')render()}).catch(()=>{})}catch(e){}
+function ex(){const q=v=>'"'+String(v).replace(/"/g,'""')+'"',us=d=>String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0')+'/'+d.getFullYear(),
+ t12=t=>{let[h,m]=t.split(':').map(Number);const a=h>=12?'PM':'AM';h=h%12||12;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+' '+a},
+ p2=n=>String(n).padStart(2,'0'),R=[['Subject','Start Date','Start Time','End Date','End Time','Description','Location']],B=ld('b2',[]);
+ for(let d=new Date(T0);d<=dt('2027-09-11');d=add(d,1))dyL(d).forEach(l=>R.push([C[l[0]].n,us(d),t12(l[2]),us(d),t12(l[3]),C[l[0]].p,l[4]+', Università Cattolica, Milano']));
+ X.filter(e=>B.includes(e.id)).forEach(e=>R.push(['Esame: '+C[e.c].n,us(e.d),t12(e.t),us(e.d),t12(p2(+e.t.slice(0,2)+2)+e.t.slice(2)),'',e.r+', Università Cattolica, Milano']));
+ ld('lb',[]).filter(b=>!xp(b)).forEach(b=>{const n=LB.find(x=>x[0]==b.l)[1];R.push(['Biblioteca: '+n+', posto '+b.s,us(dt(b.d)),t12(p2(b.a)+':00'),us(dt(b.d)),t12(p2(b.a+b.n)+':00'),'Prenotazione biblioteca',n])});
+ DL.save({filename:'unicatt-calendario.csv',data:'\ufeff'+R.map(r=>r.map(q).join(',')).join('\r\n')}).then(()=>tost('File salvato')).catch(e=>{if(e&&e.code!='declined')tost('Salvataggio non riuscito')})}
+let tt;function tost(m){const e=$('#ts');e.textContent=m;e.hidden=false;clearTimeout(tt);tt=setTimeout(()=>e.hidden=true,2400)}
+const NM={hom:'Oggi',cal:'Lezioni',cor:'Corsi',esa:'Esami',teo:'Teologia',bib:'Biblioteca',vot:'Voti',onl:'Corsi online',lib:'Libreria',mpp:'Mappa',imp:'Impostazioni',ifo:'Info'},
+mn=o=>{$('#sd').classList.toggle('open',!!o);$('#ov').classList.toggle('open',!!o)},
+jm=id=>{const e=id&&document.getElementById(id);e&&e.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'})};
+addEventListener('keydown',e=>e.key=='Escape'&&(mn(0),qx()));
+function render(){const y=scrollY;$('main').innerHTML=({hom,cal,cor,esa,teo,bib,vot,onl,lib,mpp,imp,ifo})[S.t]()+'<p class="mut" style="margin-top:28px">Date di lezioni, esami e vacanze dal calendario della Facoltà di Economia (Milano) 2026/27. Orari, aule, docenti e appelli sono esempi.</p>';if(S.t=='cor')cl();if(S.t=='lib')bl();
+ $('#ht').textContent=NM[S.t];
+ $('#hc').innerHTML=S.t=='cal'?`<select aria-label="Vai a" onchange="jm(this.value);this.selectedIndex=0"><option value="">Vai a</option><option value="d${+T0}">Oggi</option>${MS.map(([i,n])=>`<option value="${i}">${n}</option>`).join('')}</select>`:'';
+ document.querySelectorAll('aside button').forEach(b=>b.classList.toggle('on',b.dataset.t==S.t));scrollTo(0,y)}
+function go(t){S.t=t;S.rm=null;S.cf=0;mn(0);render();scrollTo(0,0)}
+ap();render();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script></body></html>
